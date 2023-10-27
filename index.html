@@ -1,88 +1,101 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AR.js Location Tags with Mapbox</title>
-    <style>
-        /* Define a style for the location tags */
-        .location-tag {
-            background-color:#be0118;
-            color: #316ef0;
-            padding: 5px;
-            border-radius: 5px;
-        }
-    </style>
-</head>
-<body>
-    <div id="scene-container"></div>
-
-    <!-- Include AR.js and Mapbox libraries -->
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>AR Search and Navigation</title>
     <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
-    <script src="https://cdn.rawgit.com/jeromeetienne/AR.js/2.3.1/aframe/build/aframe-ar.js"></script>
-    <script src="https://api.mapbox.com/mapbox-gl-js/v2.5.1/mapbox-gl.js"></script>
+    <script src="https://unpkg.com/aframe-look-at-component@0.8.0/dist/aframe-look-at-component.min.js"></script>
+    <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar-nft.js"></script>
+  </head>
+
+  <body style="margin: 0; overflow: hidden;">
+    <!-- Search Bar -->
+    <div id="search-bar" style="text-align: center; padding: 20px;">
+      <input type="text" id="search-input" placeholder="Enter location..." />
+      <button id="search-button">Search</button>
+    </div>
+
+    <!-- Start AR Button -->
+    <div id="start-ar-button" style="text-align: center; display: none;">
+      <button id="start-ar">Start AR</button>
+    </div>
+
+    <!-- AR Scene Container -->
+    <div id="ar-container" style="display: none;">
+      <a-scene
+        vr-mode-ui="enabled: false"
+        embedded
+        arjs="sourceType: webcam; debugUIEnabled: false;"
+        id="ar-scene"
+      >
+        <a-entity
+          gps-projector
+          gps-projector-status
+          projection-target="[gps-projector-target]"
+        ></a-entity>
+
+        <!-- AR Marker -->
+        <a-image
+          id="ar-marker"
+          src="#location-marker"
+          scale="3 3 3"
+          gps-entity-place="latitude: 11.2223244299523456; longitude: 77.84079573152345;"
+          position="0 0 -10"
+        ></a-image>
+        <a-text
+          id="ar-text"
+          value=""
+          look-at="[gps-camera]"
+          scale="5 5 5"
+          gps-entity-place="latitude: 11.2223244299523456; longitude: 77.84079573152345;"
+          position="0 5 -10"
+        ></a-text>
+
+        <a-camera gps-camera> </a-camera>
+      </a-scene>
+    </div>
 
     <script>
-        // Request camera access
-        navigator.mediaDevices.getUserMedia({ video: true })
-            .then(function (stream) {
-                // Camera access is granted; you can proceed with your AR scene setup.
-            })
-            .catch(function (error) {
-                console.error('Camera access denied:', error);
-            });
-        // Your Mapbox Access Token
-        mapboxgl.accessToken = 'pk.eyJ1Ijoia2F2aS0wMyIsImEiOiJjbG84bXJ1YzEwMm5hMmttdWVxZGV0MXJ0In0.Wc5-t7YS01yVUgQE1hMCmQ';
+      // Function to update the AR scene with entered text and coordinates
+      function updateARScene(text, latitude, longitude) {
+        const arText = document.querySelector("#ar-text");
+        const arMarker = document.querySelector("#ar-marker");
 
-        AFRAME.registerComponent('location-tag', {
-            schema: {
-                latitude: { type: 'number' },
-                longitude: { type: 'number' },
-                text: { type: 'string' },
-            },
-            init: function () {
-                const { latitude, longitude, text } = this.data;
-                const el = this.el;
+        arText.setAttribute("value", text);
+        arMarker.setAttribute("gps-entity-place", `latitude: ${latitude}; longitude: ${longitude};`);
+      }
 
-                // Create a mapbox marker
-                const marker = document.createElement('a-entity');
-                marker.setAttribute('gps-entity-place', `latitude: ${latitude}; longitude: ${longitude}`);
-                marker.setAttribute('scale', '10 10 10');
-                el.appendChild(marker);
+      // Handle search button click
+      const searchButton = document.getElementById("search-button");
+      searchButton.addEventListener("click", function () {
+        const searchInput = document.getElementById("search-input");
+        const searchText = searchInput.value;
+        // Replace with actual coordinates
+        const latitude = 11.2223244299523456;
+        const longitude = 77.84079573152345;
 
-                // Create the location tag
-                const tag = document.createElement('a-plane');
-                tag.setAttribute('class', 'location-tag');
-                tag.setAttribute('position', '0 1 0');
-                tag.setAttribute('scale', '0.2 0.1 1');
-                tag.setAttribute('text', `value: ${text}`);
-                marker.appendChild(tag);
-            },
-        });
+        // Hide the search bar
+        document.getElementById("search-bar").style.display = "none";
 
-        AFRAME.registerComponent('arjs-map', {
-            init: function () {
-                const sceneEl = document.querySelector('a-scene');
+        // Display the Start AR button
+        document.getElementById("start-ar-button").style.display = "block";
+      });
 
-                // Create location tags using location-tag component
-                const locations = [
-                    { latitude: 40.712776, longitude: -74.005974, text: 'New York City' },
-                    // Add more locations here
-                ];
+      // Handle Start AR button click
+      const startARButton = document.getElementById("start-ar");
+      startARButton.addEventListener("click", function () {
+        // Initialize the AR scene and update it
+        const arScene = document.getElementById("ar-scene");
+        arScene.setAttribute("arjs", "sourceType: webcam; debugUIEnabled: false;");
+        updateARScene(searchText, latitude, longitude);
 
-                locations.forEach((location) => {
-                    const tagEl = document.createElement('a-entity');
-                    tagEl.setAttribute('location-tag', location);
-                    sceneEl.appendChild(tagEl);
-                });
-            },
-        });
+        // Hide the Start AR button
+        document.getElementById("start-ar-button").style.display = "none";
+
+        // Display the AR scene container
+        document.getElementById("ar-container").style.display = "block";
+      });
     </script>
-
-    <!-- Define the AR scene -->
-    <a-scene embedded arjs="sourceType: webcam; debugUIEnabled: false;">
-        <a-camera-static></a-camera-static>
-        <a-entity arjs-map></a-entity>
-    </a-scene>
-</body>
+  </body>
 </html>
