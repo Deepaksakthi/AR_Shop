@@ -1,72 +1,88 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <!-- 
-      This is an HTML comment
-      You can write text in a comment and the content won't be visible in the page
-    -->
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AR.js Location Tags with Mapbox</title>
+    <style>
+        /* Define a style for the location tags */
+        .location-tag {
+            background-color:#be0118;
+            color: #316ef0;
+            padding: 5px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div id="scene-container"></div>
 
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="icon" href="https://glitch.com/favicon.ico" />
+    <!-- Include AR.js and Mapbox libraries -->
+    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+    <script src="https://cdn.rawgit.com/jeromeetienne/AR.js/2.3.1/aframe/build/aframe-ar.js"></script>
+    <script src="https://api.mapbox.com/mapbox-gl-js/v2.5.1/mapbox-gl.js"></script>
 
-    <!--
-      This is the page head - it contains info the browser uses
-      Like the title, which appears on the browser tab but not inside the page
-      Further down you'll see the content that displays in the page
-    -->
-    <title>Hello World!</title>
+    <script>
+        // Request camera access
+        navigator.mediaDevices.getUserMedia({ video: true })
+            .then(function (stream) {
+                // Camera access is granted; you can proceed with your AR scene setup.
+            })
+            .catch(function (error) {
+                console.error('Camera access denied:', error);
+            });
+        // Your Mapbox Access Token
+        mapboxgl.accessToken = 'pk.eyJ1Ijoia2F2aS0wMyIsImEiOiJjbG84bXJ1YzEwMm5hMmttdWVxZGV0MXJ0In0.Wc5-t7YS01yVUgQE1hMCmQ';
 
-    <!-- The website stylesheet -->
-    <link rel="stylesheet" href="/style.css" />
+        AFRAME.registerComponent('location-tag', {
+            schema: {
+                latitude: { type: 'number' },
+                longitude: { type: 'number' },
+                text: { type: 'string' },
+            },
+            init: function () {
+                const { latitude, longitude, text } = this.data;
+                const el = this.el;
 
-    <!-- The website JavaScript file -->
-    <script src="/script.js" defer></script>
-  </head>
-  <body>
-    <!--
-      The body includes the content you see in the page
-      Each element is defined using tags, like this <div></div>
-      The attributes like class="wrapper" let us style elements in the CSS
-    -->
-    <div class="wrapper">
-      <div class="content" role="main">
-        <h1 class="title">Hello World!</h1>
-        <img
-          src="https://cdn.glitch.com/a9975ea6-8949-4bab-addb-8a95021dc2da%2Fillustration.svg?v=1618177344016"
-          class="illustration"
-          alt="Editor illustration"
-          title="Click the image!"
-        />
-        <div class="instructions">
-          <h2>Using this project</h2>
-          <p>
-            This is the Glitch <strong>Hello Website</strong> project. You can
-            use it to build your own site. Check out the code in the editor and open
-            the <span class="fileopener" data-file="TODO.md" data-line="0"
-              >TODO</span> for next steps!
-          </p>
-          <!--  🚧 TODO: ADD BUTTON HERE -->
+                // Create a mapbox marker
+                const marker = document.createElement('a-entity');
+                marker.setAttribute('gps-entity-place', `latitude: ${latitude}; longitude: ${longitude}`);
+                marker.setAttribute('scale', '10 10 10');
+                el.appendChild(marker);
 
-          <!-- Once you've added the button from TODO.md, click it in the page -->
-          <!-- Check out the function in script.js to see how it works -->
-        </div>
-      </div>
-    </div>
-    <!-- The footer holds our remix button — you can keep or delete it ✂ -->
-    <footer class="footer">
-      <div class="links"></div>
-      <a
-        class="btn--remix"
-        target="_top"
-        href="https://glitch.com/edit/#!/remix/glitch-hello-website"
-      >
-        <img
-          src="https://cdn.glitch.com/605e2a51-d45f-4d87-a285-9410ad350515%2FLogo_Color.svg?v=1618199565140"
-          alt=""
-        />
-        Remix on Glitch
-      </a>
-    </footer>
-  </body>
+                // Create the location tag
+                const tag = document.createElement('a-plane');
+                tag.setAttribute('class', 'location-tag');
+                tag.setAttribute('position', '0 1 0');
+                tag.setAttribute('scale', '0.2 0.1 1');
+                tag.setAttribute('text', `value: ${text}`);
+                marker.appendChild(tag);
+            },
+        });
+
+        AFRAME.registerComponent('arjs-map', {
+            init: function () {
+                const sceneEl = document.querySelector('a-scene');
+
+                // Create location tags using location-tag component
+                const locations = [
+                    { latitude: 40.712776, longitude: -74.005974, text: 'New York City' },
+                    // Add more locations here
+                ];
+
+                locations.forEach((location) => {
+                    const tagEl = document.createElement('a-entity');
+                    tagEl.setAttribute('location-tag', location);
+                    sceneEl.appendChild(tagEl);
+                });
+            },
+        });
+    </script>
+
+    <!-- Define the AR scene -->
+    <a-scene embedded arjs="sourceType: webcam; debugUIEnabled: false;">
+        <a-camera-static></a-camera-static>
+        <a-entity arjs-map></a-entity>
+    </a-scene>
+</body>
 </html>
