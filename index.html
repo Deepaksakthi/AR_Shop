@@ -33,10 +33,10 @@
         <!-- AR Marker -->
         <a-image
           id="ar-marker"
-          src="#location-marker"
-          scale="3 3 3"
+          src="https://cdn4.iconfinder.com/data/icons/green-shopper/1046/location.png"
+          scale="30 30 30"
           gps-entity-place="latitude: 11.2223244299523456; longitude: 77.84079573152345;"
-          position="0 5 -10"
+          position="0 0 -10"
         ></a-image>
 
         <!-- Display entered text and location tag -->
@@ -62,7 +62,7 @@
       searchButton.addEventListener("click", function () {
         const searchInput = document.getElementById("search-input");
         const searchText = searchInput.value;
-
+        const imageSource = "https://cdn4.iconfinder.com/data/icons/green-shopper/1046/location.png"; 
         // Display the entered text
         const searchTextDisplay = document.getElementById("search-text");
         searchTextDisplay.textContent = `Entered Text: ${searchText}`;
@@ -81,7 +81,7 @@
             const longitude = 77.84079573152345;
 
             // Update the AR scene with the entered text and location tag
-            updateARScene(searchText, latitude, longitude);
+           updateARScene(searchText, imageSource, latitude, longitude);
 
             // Display the AR scene container
             document.getElementById("ar-container").style.display = "block";
@@ -92,14 +92,19 @@
       });
 
       // Function to update the AR scene with entered text and coordinates
-      function updateARScene(text, latitude, longitude) {
-        const arText = document.querySelector("#ar-text");
-        arText.setAttribute("value", text);
+      // Function to update the AR scene with entered text and image
+function updateARScene(text, imageSrc, latitude, longitude) {
+  const arText = document.querySelector("#ar-text");
+  arText.setAttribute("value", text);
 
-        // Set the location tag's coordinates
-        const arMarker = document.querySelector("#ar-marker");
-        arMarker.setAttribute("gps-entity-place", `latitude: ${latitude}; longitude: ${longitude}`);
-      }
+  const arMarker = document.querySelector("#ar-marker");
+  arMarker.setAttribute("gps-entity-place", `latitude: ${latitude}; longitude: ${longitude}`);
+  arMarker.setAttribute("src", imageSrc); // Set the image source
+}
+
+// Example usage of updateARScene function
+
+
     </script>
   </body>
 </html>
