@@ -56,7 +56,7 @@
 
     <script>
       // Function to update the AR scene with entered text and coordinates
-      function updateARScene(text, latitude, longitude) {
+      /*function updateARScene(text, latitude, longitude) {
         const arText = document.querySelector("#ar-text");
         const arMarker = document.querySelector("#ar-marker");
 
@@ -68,7 +68,7 @@
         const camera = document.createElement("a-camera");
         camera.setAttribute("gps-camera", "");
         arScene.appendChild(camera);
-      }
+      }*/
 
       // Handle search button click
       const searchButton = document.getElementById("search-button");
@@ -86,28 +86,26 @@
         document.getElementById("start-ar-button").style.display = "block";
       });
 
-      // Handle Start AR button click
-      const startARButton = document.getElementById("start-ar");
-      startARButton.addEventListener("click", function () {
-        // Request camera access here, after the "Start AR" button is clicked
-        navigator.mediaDevices.getUserMedia({ video: true })
-          .then(function (stream) {
-            // Camera access is granted; you can proceed with AR initialization
-            // Initialize the AR scene and update it
-            const arScene = document.getElementById("ar-scene");
-            arScene.setAttribute("arjs", "sourceType: webcam; debugUIEnabled: false;");
-            updateARScene(searchText, latitude, longitude);
+const startARButton = document.getElementById("start-ar");
+startARButton.addEventListener("click", function () {
+  // Request camera access here, after the "Start AR" button is clicked
+  navigator.mediaDevices
+    .getUserMedia({ video: true })
+    .then(function (stream) {
+      // Camera access is granted; you can proceed with AR initialization
+      const arScene = document.getElementById("ar-scene");
+      arScene.setAttribute("arjs", "sourceType: webcam; debugUIEnabled: false");
 
-            // Hide the Start AR button
-            document.getElementById("start-ar-button").style.display = "none";
+      // Hide the Start AR button
+      document.getElementById("start-ar-button").style.display = "none";
 
-            // Display the AR scene container
-            document.getElementById("ar-container").style.display = "block";
-          })
-          .catch(function (error) {
-            console.error('Camera access denied:', error);
-          });
-      });
+      // Display the AR scene container
+      document.getElementById("ar-container").style.display = "block";
+    })
+    .catch(function (error) {
+      console.error("Camera access denied:", error);
+    });
+});
     </script>
   </body>
 </html>
