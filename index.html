@@ -58,11 +58,12 @@
 
     <script>
       // Handle Search button click
+      console.log("hello world");
       const searchButton = document.getElementById("search-button");
       searchButton.addEventListener("click", function () {
         const searchInput = document.getElementById("search-input");
         const searchText = searchInput.value;
-        const imageSource = "https://cdn4.iconfinder.com/data/icons/green-shopper/1046/location.png"; 
+        const imageSource="https://cdn4.iconfinder.com/data/icons/green-shopper/1046/location.png";
         // Display the entered text
         const searchTextDisplay = document.getElementById("search-text");
         searchTextDisplay.textContent = `Entered Text: ${searchText}`;
