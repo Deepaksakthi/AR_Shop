@@ -31,13 +31,15 @@
         ></a-entity>
 
         <!-- AR Marker -->
-        <a-image
-          id="ar-marker"
-          src="https://cdn4.iconfinder.com/data/icons/green-shopper/1046/location.png"
-          scale="30 30 30"
-          gps-entity-place="latitude: 11.2223244299523456; longitude: 77.84079573152345;"
-          position="0 0 -10"
-        ></a-image>
+        <!-- AR Marker -->
+<a-image
+  id="ar-marker"
+  src="https://cdn4.iconfinder.com/data/icons/green-shopper/1046/location.png"
+  scale="100 100 100" 
+  gps-entity-place="latitude: 11.2223244299523456; longitude: 77.84079573152345;"
+  position="150 10 -5" 
+></a-image>
+
 
         <!-- Display entered text and location tag -->
         <a-text
@@ -46,7 +48,7 @@
           look-at="[gps-camera]"
           scale="5 5 5"
           gps-entity-place="latitude: 11.2223244299523456; longitude: 77.84079573152345;"
-          position="0 5 -10"
+          position="20 5 -50"
         ></a-text>
       </a-scene>
     </div>
@@ -99,7 +101,7 @@ function updateARScene(text, imageSrc, latitude, longitude) {
   arText.setAttribute("value", text);
 
   const arMarker = document.querySelector("#ar-marker");
-  arMarker.setAttribute("gps-entity-place", `latitude: ${latitude}; longitude: ${longitude}`);
+ // arMarker.setAttribute("gps-entity-place", `latitude: ${latitude}; longitude: ${longitude}`);
   arMarker.setAttribute("src", imageSrc); // Set the image source
 }
 
