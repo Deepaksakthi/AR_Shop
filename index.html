@@ -26,21 +26,52 @@
         <!-- AR Marker -->
         <!-- Text and image to be displayed when found -->
         <a-text
-          id="ar-Erode"
+          id="ar-Groceries"
           look-at="[gps-camera]"
-          value=""
+          value=" "
           scale="50 50 50"
           gps-entity-place="latitude:11.222324429950000; longitude:77.84079573156372;"
           position="-20 8 -50"
           
         ></a-text>
-
         <a-image
-          id="ar-image"
+          id="ar-image1"
           scale="5 5 5"
           gps-entity-place="latitude:11.222324429950000; longitude: 77.84079573156372;"
           position="-22 8 -50"
-         
+        ></a-image>
+        
+        
+        <a-text
+          id="ar-Bill counter"
+          look-at="[gps-camera]"
+          value=" "
+          scale="50 50 50"
+          gps-entity-place="latitude:11.222324429950000; longitude:77.84079573156372;"
+          position="10 8 -50"
+          
+        ></a-text>
+        <a-image
+          id="ar-image2"
+          scale="5 5 5"
+          gps-entity-place="latitude:11.222324429950000; longitude: 77.84079573156372;"
+          position="12 8 -50"
+        ></a-image>
+        
+        <a-text
+          id="ar-Stationeries"
+          look-at="[gps-camera]"
+          value=""
+          scale="50 50 50"
+          gps-entity-place="latitude:11.222324429950000; longitude:77.84079573156372;"
+          position="30 8 -50"
+          
+        ></a-text>
+        <a-image
+          id="ar-image3"
+          scale="5 5 5"
+          gps-entity-place="latitude:11.222324429950000; longitude: 77.84079573156372;"
+          position="32 8 -50"
         ></a-image>
       </a-scene>
 
@@ -53,16 +84,21 @@
 
         // Check if the entered text corresponds to a location
         if (searchText === "Groceries")
-          const arImage = document.getElementById("ar-image");
+          const arImage = document.getElementById("ar-image1");
           arImage.setAttribute("src", "https://cdn4.iconfinder.com/data/icons/green-shopper/1046/location.png");
-          document.getElementById("ar-Erode").setAttribute("value", searchText);
+          document.getElementById("ar-Groceries").setAttribute("value", searchText);
         }
         else if(searchText === "Bill counter"){
-          const arImage = document.getElementById("ar-image");
+          const arImage = document.getElementById("ar-image2");
           arImage.setAttribute("src", "https://cdn4.iconfinder.com/data/icons/green-shopper/1046/location.png");
-          document.getElementById("ar-Erode").setAttribute("value", searchText);
+          document.getElementById("ar-Bill counter").setAttribute("value", searchText);
         }
-      else if(searchText === "")
+      else if(searchText === "Stationeries")
+        {
+          const arImage = document.getElementById("ar-image3");
+          arImage.setAttribute("src", "https://cdn4.iconfinder.com/data/icons/green-shopper/1046/location.png");
+          document.getElementById("ar-Stationeries").setAttribute("value", searchText);
+        }
         else {
           alert("Location not found.");
         }
