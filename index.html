@@ -17,7 +17,6 @@
     </div>
 
     <!-- AR Scene Container -->
-    <div id="ar-container" style="display: none;">
       <a-scene
         vr-mode-ui="enabled: false"
         embedded
@@ -25,34 +24,26 @@
         id="ar-scene"
       >
         <!-- AR Marker -->
-        <a-image
-          id="ar-marker"
-          src="https://cdn4.iconfinder.com/data/icons/green-shopper/1046/location.png"
-          scale="30 30 30"
-          gps-entity-place="latitude:11.222324429950000; longitude:77.84079573156372;"
-          position="0 0 -10"
-        ></a-image>
-
         <!-- Text and image to be displayed when found -->
         <a-text
           id="ar-Erode"
           look-at="[gps-camera]"
-          scale="5 5 5"
+          value=""
+          scale="100 100 100"
           gps-entity-place="latitude:11.222324429950000; longitude:77.84079573156372;"
-          position="150 "
-          style="display: none;"
+          position="-20 8 -50"
+          
         ></a-text>
 
         <a-image
           id="ar-image"
-          src="https://cdn4.iconfinder.com/data/icons/green-shopper/1046/location.png"
-          scale="0.1 0.1 0.1"
+          src=""
+          scale="5 5 5"
           gps-entity-place="latitude:11.222324429950000; longitude: 77.84079573156372;"
-          position="0 0 -10"
-          style="display: none;" 
+          position="-22 8 -50"
+         
         ></a-image>
       </a-scene>
-    </div>
 
     <!-- JavaScript to control the behavior -->
     <script>
@@ -63,9 +54,16 @@
 
         // Check if the entered text corresponds to a location
         if (searchText === "Erode") {
+          // Get the <a-image> element by its ID
+              const arImage = document.getElementById("ar-image");
+
+              // Set the src attribute to a specific image URL
+              arImage.setAttribute("src", "https://cdn4.iconfinder.com/data/icons/green-shopper/1046/location.png");
+
           // Display the text and image by updating the 'display' style
-          document.getElementById("ar-text").style.display = "block";
-          document.getElementById("ar-image").style.display = "block";
+          document.getElementById("ar-Erode").setAttribute("value", searchText);
+         // document.getElementById("ar-Erode").style.display = "block";
+         document.getElementById("ar-image").setAttribute("src", "https://cdn4.iconfinder.com/data/icons/green-shopper/1046/location.png");
         } else {
           // Display an error message if the location is not found
           alert("Location not found.");
