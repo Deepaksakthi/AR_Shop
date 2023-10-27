@@ -24,93 +24,53 @@
         arjs="sourceType: webcam; debugUIEnabled: false;"
         id="ar-scene"
       >
-        <a-entity
-          gps-projector
-          gps-projector-status
-          projection-target="[gps-projector-target]"
-        ></a-entity>
-<a-assets>
-        <img
-          id="location-marker"
-          src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTZi3n90VUzDgEBIXBJ-0c_UYVnJG3yiIIiZQ&usqp=CAU"
-        />
-      </a-assets>
         <!-- AR Marker -->
-      <a-image
+        <a-image
           id="ar-marker"
-          src="#location-marker"
-          gps-entity-place="latitude: 11.2223244299523456; longitude: 77.84079573152345;"
-          scale="3 3 3"
-          position="-22 8 -50"
-      ></a-image>
-      <a-text
-        id="ar-text"
-        value=""
-        look-at="[gps-camera]"
-        scale="5 5 5"
-        gps-entity-place="latitude: 11.222324429950000; longitude: 77.84079573156372;"
-       position="-20 8 -50"
-       
-      ></a-text>
-        
+          src="https://cdn4.iconfinder.com/data/icons/green-shopper/1046/location.png"
+          scale="30 30 30"
+          gps-entity-place="latitude:11.222324429950000; longitude:77.84079573156372;"
+          position="0 0 -10"
+        ></a-image>
+
+        <!-- Text and image to be displayed when found -->
+        <a-text
+          id="ar-Erode"
+          look-at="[gps-camera]"
+          scale="5 5 5"
+          gps-entity-place="latitude:11.222324429950000; longitude:77.84079573156372;"
+          position="150 "
+          style="display: none;" 
+        ></a-text>
+
+        <a-image
+          id="ar-image"
+          src="https://cdn4.iconfinder.com/data/icons/green-shopper/1046/location.png"
+          scale="0.1 0.1 0.1"
+          gps-entity-place="latitude:11.222324429950000; longitude: 77.84079573156372;"
+          position="0 0 -10"
+          style="display: none;" 
+        ></a-image>
       </a-scene>
     </div>
 
-    <!-- Text Display -->
-    <div id="search-text-display" style="text-align: center; display: none;">
-      <p id="search-text">Entered Text: </p>
-    </div>
-
+    <!-- JavaScript to control the behavior -->
     <script>
-      // Handle Search button click
-      console.log("hello world");
       const searchButton = document.getElementById("search-button");
       searchButton.addEventListener("click", function () {
         const searchInput = document.getElementById("search-input");
         const searchText = searchInput.value;
-        const imageSource="https://cdn4.iconfinder.com/data/icons/green-shopper/1046/location.png";
-        // Display the entered text
-        const searchTextDisplay = document.getElementById("search-text");
-        searchTextDisplay.textContent = `Entered Text: ${searchText}`;
-        document.getElementById("search-text-display").style.display = "block";
 
-        // Request camera access here, after the "Search" button is clicked
-        navigator.mediaDevices
-          .getUserMedia({ video: true })
-          .then(function (stream) {
-            // Camera access is granted; you can proceed with AR initialization
-            const arScene = document.getElementById("ar-scene");
-            arScene.setAttribute("arjs", "sourceType: webcam; debugUIEnabled: false");
-
-            // Set the latitude and longitude where you want to display the text and location tag
-            const latitude = 11.2223244299523456;
-            const longitude = 77.84079573152345;
-
-            // Update the AR scene with the entered text and location tag
-           updateARScene(searchText, imageSource, latitude, longitude);
-
-            // Display the AR scene container
-            document.getElementById("ar-container").style.display = "block";
-          })
-          .catch(function (error) {
-            console.error("Camera access denied:", error);
-          });
+        // Check if the entered text corresponds to a location
+        if (searchText === "Erode") {
+          // Display the text and image by updating the 'display' style
+          document.getElementById("ar-text").style.display = "block";
+          document.getElementById("ar-image").style.display = "block";
+        } else {
+          // Display an error message if the location is not found
+          alert("Location not found.");
+        }
       });
-
-      // Function to update the AR scene with entered text and coordinates
-      // Function to update the AR scene with entered text and image
-function updateARScene(text, imageSrc, latitude, longitude) {
-  const arText = document.querySelector("#ar-text");
-  arText.setAttribute("value", text);
-
-  const arMarker = document.querySelector("#ar-marker");
- // arMarker.setAttribute("gps-entity-place", `latitude: ${latitude}; longitude: ${longitude}`);
-  arMarker.setAttribute("src", imageSrc); // Set the image source
-}
-
-// Example usage of updateARScene function
-
-
     </script>
   </body>
 </html>
