@@ -29,7 +29,7 @@
           id="ar-Erode"
           look-at="[gps-camera]"
           value=""
-          scale="100 100 100"
+          scale="50 50 50"
           gps-entity-place="latitude:11.222324429950000; longitude:77.84079573156372;"
           position="-20 8 -50"
           
@@ -37,7 +37,6 @@
 
         <a-image
           id="ar-image"
-          src=""
           scale="5 5 5"
           gps-entity-place="latitude:11.222324429950000; longitude: 77.84079573156372;"
           position="-22 8 -50"
@@ -53,19 +52,18 @@
         const searchText = searchInput.value;
 
         // Check if the entered text corresponds to a location
-        if (searchText === "Erode") {
-          // Get the <a-image> element by its ID
-              const arImage = document.getElementById("ar-image");
-
-              // Set the src attribute to a specific image URL
-              arImage.setAttribute("src", "https://cdn4.iconfinder.com/data/icons/green-shopper/1046/location.png");
-
-          // Display the text and image by updating the 'display' style
+        if (searchText === "Groceries")
+          const arImage = document.getElementById("ar-image");
+          arImage.setAttribute("src", "https://cdn4.iconfinder.com/data/icons/green-shopper/1046/location.png");
           document.getElementById("ar-Erode").setAttribute("value", searchText);
-         // document.getElementById("ar-Erode").style.display = "block";
-         document.getElementById("ar-image").setAttribute("src", "https://cdn4.iconfinder.com/data/icons/green-shopper/1046/location.png");
-        } else {
-          // Display an error message if the location is not found
+        }
+        else if(searchText === "Bill counter"){
+          const arImage = document.getElementById("ar-image");
+          arImage.setAttribute("src", "https://cdn4.iconfinder.com/data/icons/green-shopper/1046/location.png");
+          document.getElementById("ar-Erode").setAttribute("value", searchText);
+        }
+      else if(searchText === "")
+        else {
           alert("Location not found.");
         }
       });
