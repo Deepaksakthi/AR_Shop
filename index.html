@@ -29,27 +29,30 @@
           gps-projector-status
           projection-target="[gps-projector-target]"
         ></a-entity>
-
+<a-assets>
+        <img
+          id="location-marker"
+          src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTZi3n90VUzDgEBIXBJ-0c_UYVnJG3yiIIiZQ&usqp=CAU"
+        />
+      </a-assets>
         <!-- AR Marker -->
-        <!-- AR Marker -->
-<a-image
-  id="ar-marker"
-  src="https://cdn4.iconfinder.com/data/icons/green-shopper/1046/location.png"
-  scale="100 100 100" 
-  gps-entity-place="latitude: 11.2223244299523456; longitude: 77.84079573152345;"
-  position="150 10 -5" 
-></a-image>
-
-
-        <!-- Display entered text and location tag -->
-        <a-text
-          id="ar-text"
-          value=""
-          look-at="[gps-camera]"
-          scale="5 5 5"
+      <a-image
+          id="ar-marker"
+          src="#location-marker"
           gps-entity-place="latitude: 11.2223244299523456; longitude: 77.84079573152345;"
-          position="20 5 -50"
-        ></a-text>
+          scale="3 3 3"
+          position="-22 8 -50"
+      ></a-image>
+      <a-text
+        id="ar-text"
+        value=""
+        look-at="[gps-camera]"
+        scale="5 5 5"
+        gps-entity-place="latitude: 11.222324429950000; longitude: 77.84079573156372;"
+       position="-20 8 -50"
+       
+      ></a-text>
+
       </a-scene>
     </div>
 
