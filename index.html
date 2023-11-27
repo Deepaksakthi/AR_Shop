@@ -7,103 +7,38 @@
     <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
     <script src="https://unpkg.com/aframe-look-at-component@0.8.0/dist/aframe-look-at-component.min.js"></script>
     <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar-nft.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
   </head>
 
   <body style="margin: 0; overflow: hidden;">
-    <!-- Search Bar -->
-    <div id="search-bar" style="text-align: center; padding: 20px;">
-      <input type="text" id="search-input" placeholder="Enter location..." />
-      <button id="search-button">Search</button>
+    <div>
+      <div style="background-color:#9932cc;">
+        <br>
+        <br>
+        <h1 style="color:white;text-align:center;height:100px;">
+           Welcome to ShopAR
+        </h1>
+      </div>
+      <div style="text-align:center">
+      <button id="btn1" style="padding:20px;margin:10px;">Find your path</button><br>
+      <button id="btn2" style="padding:20px;margin:10px">About product</button><br>
+      <button id="btn3" style="padding:20px;margin:10px">Feedback Form</button>
     </div>
-
-    <!-- AR Scene Container -->
-      <a-scene
-        vr-mode-ui="enabled: false"
-        embedded
-        arjs="sourceType: webcam; debugUIEnabled: false;"
-        id="ar-scene"
-      >
-        <!-- AR Marker -->
-        <!-- Text and image to be displayed when found -->
-        <a-text
-          id="ar-Groceries"
-          look-at="[gps-camera]"
-          value=" "
-          scale="10 10 10"
-          gps-entity-place="latitude:11.222324429950000; longitude:77.84079573156372;"
-          position="-20 8 -50"
-          
-        ></a-text>
-        <a-image
-          id="ar-image1"
-          scale="5 5 5"
-          gps-entity-place="latitude:11.222324429950000; longitude: 77.84079573156372;"
-          position="-23 8 -50"
-        ></a-image>
-        
-        
-        <a-text
-          id="ar-Bill counter"
-          look-at="[gps-camera]"
-          value=" "
-          scale="10 10 10"
-          gps-entity-place="latitude:11.222324429950000; longitude:77.84079573156372;"
-          position="3 20 -50"
-          
-        ></a-text>
-        <a-image
-          id="ar-image2"
-          scale="5 5 5"
-          gps-entity-place="latitude:11.222324429950000; longitude: 77.84079573156372;"
-          position="0 20 -50"
-        ></a-image>
-        
-        <a-text
-          id="ar-Stationeries"
-          look-at="[gps-camera]"
-          value=""
-          scale="10 10 10"
-          gps-entity-place="latitude:11.222324429950000; longitude:77.84079573156372;"
-          position="35 0 -50"
-          
-        ></a-text>
-        <a-image
-          id="ar-image3"
-          scale="5 5 5"
-          gps-entity-place="latitude:11.222324429950000; longitude: 77.84079573156372;"
-          position="30 0 -50"
-        ></a-image>
-      </a-scene>
-
-    <!-- JavaScript to control the behavior -->
-    <script>
-      const searchButton = document.getElementById("search-button");
-      searchButton.addEventListener("click", function () {
-        const searchInput = document.getElementById("search-input");
-        const searchText = searchInput.value;
-
-        // Check if the entered text corresponds to a location
-        if (searchText === "Groceries")
-          {
-          const arImage = document.getElementById("ar-image1");
-          arImage.setAttribute("src", "https://cdn4.iconfinder.com/data/icons/green-shopper/1046/location.png");
-          document.getElementById("ar-Groceries").setAttribute("value", searchText);
-        }
-        else if(searchText === "Bill counter"){
-          const arImage = document.getElementById("ar-image2");
-          arImage.setAttribute("src", "https://cdn4.iconfinder.com/data/icons/green-shopper/1046/location.png");
-          document.getElementById("ar-Bill counter").setAttribute("value", searchText);
-        }
-      else if(searchText === "Stationeries")
-        {
-          const arImage = document.getElementById("ar-image3");
-          arImage.setAttribute("src", "https://cdn4.iconfinder.com/data/icons/green-shopper/1046/location.png");
-          document.getElementById("ar-Stationeries").setAttribute("value", searchText);
-        }
-        else {
-          alert("Location not found.");
-        }
-      });
-    </script>
+    </div>
   </body>
+  <script>
+    document.getElementById('btn1').onclick = function() {
+        // Navigate to another page (replace 'target-page.html' with the actual page URL)
+        window.location.href = 'customised_nav.html';
+    };
+    document.getElementById('btn2').onclick = function() {
+        // Navigate to another page (replace 'target-page.html' with the actual page URL)
+        window.location.href = 'about.html';
+    };
+    document.getElementById('btn3').onclick = function() {
+        // Navigate to another page (replace 'target-page.html' with the actual page URL)
+        window.location.href = 'feedback.html';
+    };
+  </script>
 </html>

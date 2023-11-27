@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>AR Search and Navigation</title>
+    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+    <script src="https://unpkg.com/aframe-look-at-component@0.8.0/dist/aframe-look-at-component.min.js"></script>
+    <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar-nft.js"></script>
+    <style>
+.dropbtn {
+  background-color:#9932cc;
+  color: white;
+  padding: 8px;
+  font-size: 16px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 10px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdown-content a {
+  color: black;
+  padding: 20px 40px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown-content a:hover {background-color: #f1f1f1}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+.dropdown:hover .dropbtn {
+  background-color: #9932cc;
+}
+</style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+  </head>
+
+  <body style="margin: 0; overflow: hidden;">
+     
+    <!-- Search Bar -->
+    
+    <div id="search-bar" style="text-align: center; padding: 40px;">
+      <div class="dropdown" style="margin:0px 20px">
+  <button class="dropbtn"> <i class="fa fa-bars"></i></button>
+  <div class="dropdown-content">
+  <a href="index.html">Home</a>
+  <a href="about.html">About</a>
+  <a href="feedback.html">Feedback</a>
+  </div>  
+</div>
+      <input type="text" id="search-input" placeholder="Enter location..." style="padding:7px"/>
+      <button id="search-button" style="padding:7px"><i class="fa fa-search" ></i></button>
+<div style="text-align:center;color:white">
+  <p>
+  Type "Groceries"or"Bill counter"or"Stationeries"</p>
+  <p>
+    to see the specified marker pointing </p>
+  <p>to the specific location
+      </p>
+      </div>
+  </div>
+
+    <!-- AR Scene Container -->
+      <a-scene
+        vr-mode-ui="enabled: false"
+        embedded
+        arjs="sourceType: webcam; debugUIEnabled: false;"
+        id="ar-scene">
+        <!-- AR Marker -->
+        <!-- Text and image to be displayed when found -->
+        <a-text
+          id="ar-Groceries"
+          look-at="[gps-camera]"
+          value=" "
+          scale="10 10 10"
+          gps-entity-place="latitude:11.222324429950000; longitude:77.84079573156372;"
+          position="-20 8 -50"
+          
+        ></a-text>
+        <a-image
+          id="ar-image1"
+          scale="0 0 0"
+          gps-entity-place="latitude:11.222324429950000; longitude: 77.84079573156372;"
+          position="-23 8 -50"
+        ></a-image>
+        
+        
+        <a-text
+          id="ar-Bill counter"
+          look-at="[gps-camera]"
+          value=" "
+          scale="10 10 10"
+          gps-entity-place="latitude:11.222324429950000; longitude:77.84079573156372;"
+          position="3 20 -50"
+          
+        ></a-text>
+        <a-image
+          id="ar-image2"
+          scale="0 0 0"
+          gps-entity-place="latitude:11.222324429950000; longitude: 77.84079573156372;"
+          position="0 20 -50"
+        ></a-image>
+        
+        <a-text
+          id="ar-Stationeries"
+          look-at="[gps-camera]"
+          value=""
+          scale="10 10 10"
+          gps-entity-place="latitude:11.222324429950000; longitude:77.84079573156372;"
+          position="35 0 -50"
+          
+        ></a-text>
+        <a-image
+          id="ar-image3"
+          scale="0 0 0"
+          gps-entity-place="latitude:11.222324429950000; longitude: 77.84079573156372;"
+          position="30 0 -50"
+        ></a-image>
+      </a-scene>
+
+    <!-- JavaScript to control the behavior -->
+    <script>
+      const searchButton = document.getElementById("search-button");
+      searchButton.addEventListener("click", function () {
+        const searchInput = document.getElementById("search-input");
+        const searchText = searchInput.value;
+
+        // Check if the entered text corresponds to a location
+        if (searchText === "Groceries")
+          {
+          const arImage = document.getElementById("ar-image1");
+          arImage.setAttribute("src", "https://cdn4.iconfinder.com/data/icons/green-shopper/1046/location.png");
+          document.getElementById("ar-Groceries").setAttribute("value", searchText);
+          arImage.setAttribute("scale", "7 7 7");
+        }
+        else if(searchText === "Bill counter"){
+          const arImage = document.getElementById("ar-image2");
+          arImage.setAttribute("src", "https://cdn4.iconfinder.com/data/icons/green-shopper/1046/location.png");
+          document.getElementById("ar-Bill counter").setAttribute("value", searchText);
+          arImage.setAttribute("scale", "7 7 7");
+        }
+      else if(searchText === "Stationeries")
+        {
+          const arImage = document.getElementById("ar-image3");
+          arImage.setAttribute("src", "https://cdn4.iconfinder.com/data/icons/green-shopper/1046/location.png");
+          document.getElementById("ar-Stationeries").setAttribute("value", searchText);
+          arImage.setAttribute("scale", "7 7 7");
+        }
+        else {
+          alert("Location not found.");
+        }
+      });
+      const arrowButton = document.getElementById("arrow-button");
+      arrowButton.addEventListener("click", function () {
+        // Redirect to the feedback page
+        window.location.href = "feedback.html";
+      });
+       function toggleMenu() {
+      var navbarMenu = document.querySelector('.navbar-menu');
+      navbarMenu.style.display = (navbarMenu.style.display === 'block' ? 'none' : 'block');
+    }
+    </script>
+  </body>
+</html>
